@@ -63,6 +63,8 @@ else
   let s:runjslint_ext = 'js'
   if exists("$JS_CMD")
     let s:cmd = "$JS_CMD"
+  elseif executable('jsl')
+    let s:cmd = "jsl -nologo -nofilelisting -nosummary -nocontext -stdin -output-format  \"__LINE__:0:__ERROR__\"; exit 0"
   elseif executable('/System/Library/Frameworks/JavaScriptCore.framework/Resources/jsc')
     let s:cmd = '/System/Library/Frameworks/JavaScriptCore.framework/Resources/jsc'
   elseif executable('node')
@@ -77,7 +79,7 @@ let s:plugin_path = s:install_dir . "/jslint/"
 if has('win32')
   let s:plugin_path = substitute(s:plugin_path, '/', '\', 'g')
 endif
-let s:cmd = "cd " . s:plugin_path . " && " . s:cmd . " " . s:plugin_path . "runjslint." . s:runjslint_ext
+"let s:cmd = "cd " . s:plugin_path . " && " . s:cmd . " " . s:plugin_path . "runjslint." . s:runjslint_ext
 
 let s:jslintrc_file = expand('~/.jslintrc')
 if filereadable(s:jslintrc_file)
