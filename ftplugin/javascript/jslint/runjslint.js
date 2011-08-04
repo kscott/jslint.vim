@@ -70,7 +70,13 @@ var readSTDIN = (function() {
 })();
 
 readSTDIN(function(body) {
-    var ok = JSLINT(body)
+    var options = {
+        indent: 2,
+        sloppy: true,
+        maxerr: 100,
+        predef: ["jQuery"]
+    }
+    var ok = JSLINT(body, options)
       , i
       , error
       , errorType
